@@ -1,6 +1,6 @@
 {
   "name": "pkgname",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A simple tool that helps you find a name for your app, framework or library",
   "license": "MIT",
   "author": "Clemens Akens <clebert@me.com>",
