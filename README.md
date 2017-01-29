@@ -6,6 +6,8 @@
 
 A simple tool that helps you find a name for your app, framework or library.
 
+The list of name suggestions is based on [WordNet's][6] lexical database for English.
+
 ## Installation
 
 ```sh
@@ -86,3 +88,4 @@ Built by (c) Clemens Akens. Released under the MIT license.
 [3]: https://travis-ci.org/clebert/pkgname
 [4]: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg
 [5]: http://commitizen.github.io/cz-cli/
+[6]: http://wordnet.princeton.edu/wordnet/
