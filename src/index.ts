@@ -11,13 +11,13 @@ const help = `
     --help, -h        Usage information
     --version, -v     Version information
     --npm-check       Displays only names that are available on npm
-    --latest          Fetches the latest npm registry data even if it's already fetched
+    --npm-latest      Fetches the latest npm registry data even if it's already fetched
     --max-length <n>  Displays only names with a maximum length of <n>
 
   Examples
     $ pkgname
     $ pkgname --npm-check --max-length 7
-    $ pkgname --npm-check --latest --max-length 7
+    $ pkgname --npm-check --npm-latest --max-length 7
 `;
 
 const args = meow(help, {
@@ -29,9 +29,9 @@ const args = meow(help, {
 
 // tslint:disable-next-line no-floating-promises
 main({
-  latest: Boolean(args.flags['latest']),
   maxLength: args.flags['maxLength'] && parseInt(args.flags['maxLength'], 10),
-  npmCheck: Boolean(args.flags['npmCheck'])
+  npmCheck: Boolean(args.flags['npmCheck']),
+  npmLatest: Boolean(args.flags['npmLatest'])
 }).catch(error => {
   console.error(error && error.message ? error.message : error);
 

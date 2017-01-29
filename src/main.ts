@@ -11,15 +11,15 @@ const rl = createInterface({
 });
 
 export interface Options {
-  readonly latest?: boolean;
   readonly maxLength?: number;
   readonly npmCheck?: boolean;
+  readonly npmLatest?: boolean;
 }
 
 export async function main(options: Options): Promise<void> {
   console.log(yellow(`Detected options: ${JSON.stringify(options)}\n`));
 
-  const npmPackageNames = new Set(options.npmCheck ? await fetchNpmPackageNames(options.latest) : []);
+  const npmPackageNames = new Set(options.npmCheck ? await fetchNpmPackageNames(options.npmLatest) : []);
   const dictionary = new Map(await fetchDictionary());
 
   let names = [];

@@ -22,12 +22,13 @@ Options
   --help, -h        Usage information
   --version, -v     Version information
   --npm-check       Displays only names that are available on npm
-  --latest          Fetches the latest npm registry data even if it's already fetched
+  --npm-latest      Fetches the latest npm registry data even if it's already fetched
   --max-length <n>  Displays only names with a maximum length of <n>
 
 Examples
   $ pkgname
   $ pkgname --npm-check --max-length 7
+  $ pkgname --npm-check --npm-latest --max-length 7
 ```
 
 ## Roadmap
