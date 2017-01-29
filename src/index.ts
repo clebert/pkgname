@@ -11,7 +11,7 @@ const help = `
     --help, -h        Usage information
     --version, -v     Version information
     --npm-check       Displays only names that are available on npm
-    --npm-latest      Fetches the latest npm registry data even if it's already fetched
+    --npm-latest      Downloads the latest npm package registry even if it already exists
     --max-length <n>  Displays only names with a maximum length of <n>
 
   Examples
