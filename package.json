@@ -22,7 +22,6 @@
   },
   "scripts": {
     "commitmsg": "conventional-changelog-lint -e",
-    "prepush": "npm prune && npm install && npm test",
     "prebuild": "rimraf lib",
     "build": "tsc --project .",
     "cz": "git-cz",
