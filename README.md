@@ -4,17 +4,36 @@
 [![Build Status][2]][3]
 [![Commitizen friendly][4]][5]
 
-TODO.
+A simple tool that helps you find a name for your app, framework or library.
 
 ## Installation
 
 ```sh
-npm install --save --save-exact pkgname
+npm install -g pkgname
 ```
 
 ## Usage
 
-TODO
+```
+Usage
+  $ pkgname [options]
+
+Options
+  --help, -h        Usage information
+  --version, -v     Version information
+  --npm-check       Displays only names that are available on npm
+  --latest          Fetches the latest npm registry data even if it's already fetched
+  --max-length <n>  Displays only names with a maximum length of <n>
+
+Examples
+  $ pkgname
+  $ pkgname --npm-check --max-length 7
+```
+
+## Roadmap
+
+- [ ] Categorized names: `--animal`, `--food`, `--person`, `--plant`, `...`
+- [ ] Favorites list
 
 ## Development
 
