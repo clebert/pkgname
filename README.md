@@ -31,11 +31,6 @@ Examples
   $ pkgname --npm-check --npm-latest --max-length 7
 ```
 
-## Roadmap
-
-- [ ] Categorized names: `--animal`, `--food`, `--person`, `--plant`, `...`
-- [ ] Favorites list
-
 ## Development
 
 ### Installing the dev dependencies
