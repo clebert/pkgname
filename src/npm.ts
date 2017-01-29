@@ -1,43 +1,36 @@
-import { green, red, yellow } from 'chalk';
 import fetch from 'node-fetch';
-import { loadNpmPackageNames, saveNpmPackageNames } from './store';
+import { getCache } from './cache';
 
-interface NpmPackageData {
+export interface Package {
   readonly id: string;
 }
 
-interface NpmRegistryData {
+export interface PackageRegistry {
   readonly total_rows: number;
-  readonly rows: NpmPackageData[];
+  readonly rows: Package[];
 }
 
-export async function fetchNpmPackageNames(force?: boolean): Promise<string[]> {
-  let npmPackageNames = loadNpmPackageNames();
+export function createReservedNames(packageRegistry: PackageRegistry): Set<string> {
+  return new Set(packageRegistry.rows.map(row => row.id));
+}
 
-  if (npmPackageNames && !force) {
-    console.log(green('\u2713 The npm registry data is already fetched'));
+const cacheKey = 'packageRegistry';
 
-    return npmPackageNames;
+export async function fetchPackageRegistry(force?: boolean): Promise<PackageRegistry> {
+  const cache = getCache();
+
+  if (cache.has(cacheKey) && !force) {
+    return cache.get(cacheKey);
   }
-
-  if (!npmPackageNames) {
-    console.log(red('\u2717 The npm registry data is not yet fetched'));
-  }
-
-  console.log(yellow('\u2026 Fetching the latest npm registry data'));
 
   const res = await fetch('https://skimdb.npmjs.com/registry/_all_docs');
-  const data: NpmRegistryData = await res.json();
+  const packageRegistry = await res.json() as PackageRegistry;
 
-  if (data.total_rows !== data.rows.length) {
-    throw new Error('Invalid npm registry data');
+  if (packageRegistry.total_rows !== packageRegistry.rows.length) {
+    throw new Error('Inconsistent data');
   }
 
-  npmPackageNames = data.rows.map(row => row.id);
+  cache.set(cacheKey, packageRegistry);
 
-  saveNpmPackageNames(npmPackageNames);
-
-  console.log(green('\u2713 The latest npm registry data is now fetched'));
-
-  return npmPackageNames;
+  return packageRegistry;
 }
