@@ -33,7 +33,7 @@ export async function main(options: Options): Promise<void> {
   names = shuffle(names);
 
   console.log(green(`\n${names.length} names are available`));
-  console.log(yellow('\nPress q+\u23ce to quit'));
+  console.log(yellow('\nPress \u23ce to display next name\nPress q+\u23ce to quit'));
 
   for (const name of names) {
     const definition = dictionary.get(name);
