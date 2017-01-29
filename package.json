@@ -10,7 +10,7 @@
   },
   "bin": "./lib/index.js",
   "engines": {
-    "node": ">=7"
+    "node": ">=6"
   },
   "config": {
     "commitizen": {
