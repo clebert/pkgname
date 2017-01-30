@@ -41,16 +41,16 @@ Examples
 npm install
 ```
 
-### Watching the sources
+### Watching the sources and tests
 
 ```sh
 npm run watch
 ```
 
-### Running the tests
+### Checking for formatting and linting errors
 
 ```sh
-npm test
+npm run check
 ```
 
 ### Formatting the sources

@@ -20,20 +20,25 @@
       "config": ".cz-config.js"
     }
   },
+  "ava": {
+    "verbose": true
+  },
   "scripts": {
     "commitmsg": "conventional-changelog-lint -e",
-    "prebuild": "rimraf lib",
+    "prebuild": "rm -rf lib/*",
     "build": "tsc --project .",
     "postbuild": "chmod +x lib/index.js",
+    "check": "tsfmt --verify && tslint --config tslint-type-check.json --project tsconfig.json --type-check --formatters-dir node_modules/custom-tslint-formatters/formatters --format grouped",
     "cz": "git-cz",
     "format": "tsfmt --replace",
-    "lint": "tslint --config tslint-type-check.json --project tsconfig.json --type-check --formatters-dir node_modules/custom-tslint-formatters/formatters --format grouped",
     "prerelease": "git checkout master && npm prune && npm install && npm test",
     "release": "standard-version",
     "pretest": "npm run build",
-    "test": "npm run lint && tsfmt --verify && ./lib/index.js -v",
-    "watch": "npm-run-all --parallel watch:*",
-    "watch:build": "npm run build -- --watch"
+    "test": "npm run check && ava && ./lib/index.js -v",
+    "prewatch": "npm run build",
+    "watch": "run-p --continue-on-error watch:*",
+    "watch:sources": "tsc --project . --watch",
+    "watch:tests": "ava --watch"
   },
   "dependencies": {
     "chalk": "1.1.3",
@@ -52,13 +57,13 @@
     "@types/meow": "3.6.1",
     "@types/node": "7.0.4",
     "@types/node-fetch": "1.6.7",
+    "ava": "0.17.0",
     "commitizen": "2.9.5",
     "conventional-changelog-lint": "1.1.0",
     "custom-tslint-formatters": "2.0.0",
     "cz-customizable": "4.0.0",
     "husky": "0.13.1",
     "npm-run-all": "4.0.1",
-    "rimraf": "2.5.4",
     "standard-version": "4.0.0",
     "ts-config": "1.2.0",
     "tslint": "4.4.2",
