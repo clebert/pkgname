@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/clebert/pkgname/compare/v1.0.0...v1.1.0) (2017-01-30)
+
+
+### Features
+
+* reduce log messages and switch config format ([ca692c5](https://github.com/clebert/pkgname/commit/ca692c5))
+* set config name to package version ([bdda47c](https://github.com/clebert/pkgname/commit/bdda47c))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/clebert/pkgname/compare/v0.1.0...v1.0.0) (2017-01-29)
 
