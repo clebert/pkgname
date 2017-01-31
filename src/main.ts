@@ -2,8 +2,9 @@ import shuffle = require('lodash/shuffle');
 
 import { blue, gray, green, yellow } from 'chalk';
 import { createInterface } from 'readline';
-import { createReservedNames, fetchPackageRegistry } from './npm';
-import { createNounDictionary, fetchLexicalDatabase } from './wordnet';
+import { readCache, writeCache } from './cache';
+import { PackageRegistry, createReservedNames, fetchPackageRegistry } from './npm';
+import { LexicalDatabase, createNounDictionary, fetchLexicalDatabase } from './wordnet';
 
 const rl = createInterface({
   input: process.stdin,
@@ -16,32 +17,68 @@ export interface Options {
   readonly npmLatest?: boolean;
 }
 
-export async function loadNounDictionary(options: Options): Promise<Map<string, string>> {
-  console.log(yellow('Loading the WordNet lexical database'));
+function startWaitAnimation(prefix: string): () => void {
+  process.stdout.write(yellow(`\n${prefix}`));
 
-  const lexicalDatabase = await fetchLexicalDatabase();
+  const intervalId = setInterval(() => {
+    process.stdout.write(yellow('.'));
+  }, 1000);
 
-  return createNounDictionary(lexicalDatabase);
+  return () => {
+    process.stdout.write('\n');
+
+    clearInterval(intervalId);
+  };
 }
 
-export async function loadReservedNames(options: Options): Promise<Set<string> | undefined> {
+async function downloadLexicalDatabase(): Promise<LexicalDatabase> {
+  const stopWaitAnimation = startWaitAnimation('Downloading the WordNet lexical database');
+  const lexicalDatabase = await fetchLexicalDatabase();
+
+  await writeCache('lexicalDatabase', lexicalDatabase);
+
+  stopWaitAnimation();
+
+  return lexicalDatabase;
+}
+
+async function downloadPackageRegistry(): Promise<PackageRegistry> {
+  const stopWaitAnimation = startWaitAnimation('Downloading the latest npm package registry');
+  const packageRegistry = await fetchPackageRegistry();
+
+  await writeCache('packageRegistry', packageRegistry);
+
+  stopWaitAnimation();
+
+  return packageRegistry;
+}
+
+async function loadNounDictionary(): Promise<Map<string, string>> {
+  try {
+    return createNounDictionary(await readCache<LexicalDatabase>('lexicalDatabase'));
+  } catch (error) {
+    return createNounDictionary(await downloadLexicalDatabase());
+  }
+}
+
+async function loadReservedNames(options: Options): Promise<Set<string> | undefined> {
   if (!options.npmCheck) {
     return;
   }
 
   if (options.npmLatest) {
-    console.log(yellow('Loading the latest npm package registry'));
-  } else {
-    console.log(yellow('Loading the npm package registry'));
+    return createReservedNames(await downloadPackageRegistry());
   }
 
-  const packageRegistry = await fetchPackageRegistry(options.npmLatest);
-
-  return createReservedNames(packageRegistry);
+  try {
+    return createReservedNames(await readCache<PackageRegistry>('packageRegistry'));
+  } catch (error) {
+    return createReservedNames(await downloadPackageRegistry());
+  }
 }
 
 export async function main(options: Options): Promise<void> {
-  const nounDictionary = await loadNounDictionary(options);
+  const nounDictionary = await loadNounDictionary();
   const reservedNames = await loadReservedNames(options);
 
   let nouns = [];

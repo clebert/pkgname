@@ -1,7 +1,6 @@
 import gunzip = require('gunzip-maybe');
 import { get } from 'http';
 import { extract } from 'tar-stream';
-import { getCache } from './cache';
 
 export interface LexicalDatabase {
   readonly [filename: string]: string;
@@ -31,15 +30,7 @@ export function createNounDictionary(lexicalDatabase: LexicalDatabase): Map<stri
   return nounDictionary;
 }
 
-const cacheKey = 'lexicalDatabase';
-
 export async function fetchLexicalDatabase(): Promise<LexicalDatabase> {
-  const cache = getCache();
-
-  if (cache.has(cacheKey)) {
-    return cache.get(cacheKey);
-  }
-
   return new Promise<LexicalDatabase>((resolve, reject) => {
     get('http://wordnetcode.princeton.edu/wn3.1.dict.tar.gz', res => {
       res.once('error', reject);
@@ -83,8 +74,6 @@ export async function fetchLexicalDatabase(): Promise<LexicalDatabase> {
       });
 
       tarStream.once('finish', () => {
-        cache.set(cacheKey, lexicalDatabase);
-
         resolve(lexicalDatabase);
       });
 
