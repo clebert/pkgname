@@ -53,7 +53,7 @@
   },
   "devDependencies": {
     "@types/chalk": "0.4.31",
-    "@types/lodash": "4.14.51",
+    "@types/lodash": "4.14.52",
     "@types/meow": "3.6.1",
     "@types/mkdirp": "0.3.29",
     "@types/node": "7.0.4",
