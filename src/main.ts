@@ -12,6 +12,7 @@ const rl = createInterface({
 });
 
 export interface Options {
+  readonly searchQuery?: string;
   readonly maxLength?: number;
   readonly npmCheck?: boolean;
   readonly npmLatest?: boolean;
@@ -81,12 +82,26 @@ export async function main(options: Options): Promise<void> {
   const nounDictionary = await loadNounDictionary();
   const reservedNames = await loadReservedNames(options);
 
+  const { maxLength, searchQuery } = options;
+
   let nouns = [];
 
   for (const noun of nounDictionary.keys()) {
-    if ((!options.maxLength || noun.length <= options.maxLength) && (!reservedNames || !reservedNames.has(noun))) {
+    if ((!maxLength || noun.length <= maxLength) && (!reservedNames || !reservedNames.has(noun))) {
       nouns.push(noun);
     }
+  }
+
+  if (searchQuery) {
+    nouns = nouns.filter(noun => {
+      if (noun.indexOf(searchQuery) > -1) {
+        return true;
+      }
+
+      const definition = nounDictionary.get(noun);
+
+      return definition && definition.indexOf(searchQuery) > -1;
+    });
   }
 
   nouns = shuffle(nouns);

@@ -23,16 +23,18 @@ Usage
   $ pkgname [options]
 
 Options
-  --help, -h        Usage information
-  --version, -v     Version information
-  --npm-check       Displays only names that are available on npm
-  --npm-latest      Downloads the latest npm package registry even if it already exists
-  --max-length <n>  Displays only names with a maximum length of <n>
+  --help, -h          Usage information
+  --version, -v       Version information
+  --npm-check         Displays only names that are available on npm
+  --npm-latest        Downloads the latest npm package registry even if it already exists
+  --max-length <n>    Displays only names with a maximum length of <n>
+  --search-query <s>  Displays only names/definitions that match the search query
 
 Examples
   $ pkgname
   $ pkgname --npm-check --max-length 7
   $ pkgname --npm-check --npm-latest --max-length 7
+  $ pkgname --npm-check --max-length 7 --search-query "the brightest star"
 ```
 
 ## Development
