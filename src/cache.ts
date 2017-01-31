@@ -10,7 +10,7 @@ export function getCachePath(key: string): string {
   return `${envPaths.cache}/${key}.json`;
 }
 
-export function readCache<T>(key: string): Promise<T> {
+export async function readCache<T>(key: string): Promise<T> {
   return new Promise<T>((resolve, reject) => {
     readFile(getCachePath(key), 'utf-8', (error, data) => {
       if (error) {
@@ -22,7 +22,7 @@ export function readCache<T>(key: string): Promise<T> {
   });
 }
 
-export function writeCache<T>(key: string, value: T): Promise<void> {
+export async function writeCache<T>(key: string, value: T): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     mkdirp(envPaths.cache, error1 => {
       if (error1) {
