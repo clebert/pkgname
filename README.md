@@ -1,5 +1,7 @@
 # pkgname
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/clebert/pkgname.svg)](https://greenkeeper.io/)
+
 [![npm][0]][1]
 [![Build Status][2]][3]
 [![Commitizen friendly][4]][5]
