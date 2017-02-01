@@ -98,14 +98,16 @@ export async function main(options: Options): Promise<void> {
   }
 
   if (searchQuery) {
+    const regex = new RegExp(searchQuery, 'i');
+
     nouns = nouns.filter(noun => {
-      if (noun.indexOf(searchQuery) > -1) {
+      if (regex.test(noun)) {
         return true;
       }
 
       const definition = nounDictionary.get(noun);
 
-      return definition && definition.indexOf(searchQuery) > -1;
+      return definition && regex.test(definition);
     });
   }
 
