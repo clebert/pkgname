@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.5.0"></a>
+# [1.5.0](https://github.com/clebert/pkgname/compare/v1.4.0...v1.5.0) (2017-02-01)
+
+
+### Features
+
+* add debug messages (usage: DEBUG=cache,main) ([77c255e](https://github.com/clebert/pkgname/commit/77c255e))
+
+
+
 <a name="1.4.0"></a>
 # [1.4.0](https://github.com/clebert/pkgname/compare/v1.3.0...v1.4.0) (2017-02-01)
 
