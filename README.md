@@ -28,7 +28,7 @@ Options
   --npm-check         Displays only names that are available on npm
   --npm-latest        Downloads the latest npm package registry even if it already exists
   --max-length <n>    Displays only names with a maximum length of <n>
-  --search-query <s>  Displays only names/definitions that match the search query
+  --search-query <s>  Displays only names/definitions that match the search query (case-insensitive)
 
 Examples
   $ pkgname
