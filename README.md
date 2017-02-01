@@ -83,6 +83,12 @@ git push --follow-tags origin master
 npm publish
 ```
 
+### Starting in debug mode
+
+```sh
+DEBUG=cache,main node ./lib/index.js
+```
+
 ---
 Built by (c) Clemens Akens. Released under the MIT license.
 
