@@ -1,10 +1,15 @@
+import createDebug = require('debug');
 import createEnvPaths = require('env-paths');
-import { readFile, writeFile } from 'fs';
 import mkdirp = require('mkdirp');
+
+import { readFile, writeFile } from 'fs';
 
 // tslint:disable-next-line no-var-requires
 const pkg = require('../package.json');
 const envPaths = createEnvPaths(`${pkg.name}@${pkg.version}`);
+const debug = createDebug('cache');
+
+debug('path: %s', envPaths.cache);
 
 export function getCachePath(key: string): string {
   return `${envPaths.cache}/${key}.json`;

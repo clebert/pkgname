@@ -1,3 +1,4 @@
+import createDebug = require('debug');
 import shuffle = require('lodash/shuffle');
 
 import { blue, gray, green, yellow } from 'chalk';
@@ -5,6 +6,8 @@ import { createInterface } from 'readline';
 import { readCache, writeCache } from './cache';
 import { PackageRegistry, createReservedNames, fetchPackageRegistry } from './npm';
 import { LexicalDatabase, createNounDictionary, fetchLexicalDatabase } from './wordnet';
+
+const debug = createDebug('main');
 
 const rl = createInterface({
   input: process.stdin,
@@ -79,6 +82,8 @@ async function loadReservedNames(options: Options): Promise<Set<string> | undefi
 }
 
 export async function main(options: Options): Promise<void> {
+  debug('options: %o', options);
+
   const nounDictionary = await loadNounDictionary();
   const reservedNames = await loadReservedNames(options);
 
