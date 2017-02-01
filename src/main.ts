@@ -12,10 +12,10 @@ const rl = createInterface({
 });
 
 export interface Options {
-  readonly searchQuery?: string;
   readonly maxLength?: number;
   readonly npmCheck?: boolean;
   readonly npmLatest?: boolean;
+  readonly searchQuery?: string;
 }
 
 function startWaitAnimation(prefix: string): () => void {
