@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/clebert/pkgname/compare/v1.5.1...v2.0.0) (2017-02-02)
+
+
+### Features
+
+* rename option --search-query to --search-pattern ([80839a5](https://github.com/clebert/pkgname/commit/80839a5))
+
+
+### BREAKING CHANGES
+
+* renamed the option --search-query to --search-pattern
+
+
+
 <a name="1.5.1"></a>
 ## [1.5.1](https://github.com/clebert/pkgname/compare/v1.5.0...v1.5.1) (2017-02-01)
 
