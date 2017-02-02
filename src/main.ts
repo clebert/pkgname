@@ -18,7 +18,7 @@ export interface Options {
   readonly maxLength?: number;
   readonly npmCheck?: boolean;
   readonly npmLatest?: boolean;
-  readonly searchQuery?: string;
+  readonly searchPattern?: string;
 }
 
 function startWaitAnimation(prefix: string): () => void {
@@ -87,7 +87,7 @@ export async function main(options: Options): Promise<void> {
   const nounDictionary = await loadNounDictionary();
   const reservedNames = await loadReservedNames(options);
 
-  const { maxLength, searchQuery } = options;
+  const { maxLength, searchPattern } = options;
 
   let nouns = [];
 
@@ -97,8 +97,8 @@ export async function main(options: Options): Promise<void> {
     }
   }
 
-  if (searchQuery) {
-    const regex = new RegExp(searchQuery, 'i');
+  if (searchPattern) {
+    const regex = new RegExp(searchPattern, 'i');
 
     nouns = nouns.filter(noun => {
       if (regex.test(noun)) {
