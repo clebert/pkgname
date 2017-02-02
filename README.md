@@ -6,7 +6,7 @@
 
 A simple tool that helps you find a name for your app, framework or library.
 
-The list of name suggestions is based on [WordNet's][6] lexical database for English.
+The name suggestions are generated using data from [WordNet®][6], a lexical database for English.
 
 ![Screenshot](https://raw.githubusercontent.com/clebert/pkgname/master/screenshot.png)
 
