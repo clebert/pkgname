@@ -47,7 +47,7 @@ async function downloadLexicalDatabase(): Promise<LexicalDatabase> {
 }
 
 async function downloadPackageRegistry(): Promise<PackageRegistry> {
-  const stopWaitAnimation = startWaitAnimation('Downloading the latest npm package registry');
+  const stopWaitAnimation = startWaitAnimation('Downloading the latest list of npm package names');
   const packageRegistry = await fetchPackageRegistry();
 
   await writeCache('packageRegistry', packageRegistry);
