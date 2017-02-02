@@ -28,7 +28,7 @@ Options
   --npm-check           Displays only names that are available on npm
   --npm-latest          Downloads always the latest list of npm package names, even if you already have them
   --max-length <n>      Displays only names with a maximum length of <n>
-  --search-pattern <s>  Displays only names/definitions that match the search pattern (regex/case-insensitive)
+  --search-pattern <s>  Displays only names that themselves or their definitions match the case-insensitive pattern
 
 Examples
   $ pkgname
