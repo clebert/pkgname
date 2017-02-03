@@ -26,7 +26,7 @@ const help = `
     $ pkgname
     $ pkgname --npm-check --npm-latest
     $ pkgname --max-length 7 --npm-check --search-definitions "the [a-z]+ star" --shuffle-names
-    $ pkgname --max-length 7 --npm-check --remove-hyphens --search-names "^.[aeiou][a-z]+a$"
+    $ pkgname --npm-check --remove-hyphens --search-names "^[a-z]{5}$"
 `;
 
 const args = meow(help, {
