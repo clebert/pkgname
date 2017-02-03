@@ -23,18 +23,21 @@ Usage
   $ pkgname [options]
 
 Options
-  --help, -h            Usage information
-  --version, -v         Version information
-  --npm-check           Displays only names that are available on npm
-  --npm-latest          Downloads always the latest list of npm package names, even if you already have them
-  --max-length <n>      Displays only names with a maximum length of <n>
-  --search-pattern <s>  Displays only names that themselves or their definitions match the case-insensitive pattern
+  --help, -h                Usage information
+  --version, -v             Version information
+  --max-length <n>          Displays only names with a maximum length of <n>
+  --npm-check               Displays only names that are available on npm
+  --npm-latest              Downloads always the latest list of npm package names, even if you already have them
+  --remove-hyphens          Removes the hyphens from all hyphenated names
+  --search-definitions <s>  Displays only names whose definition match the case-insensitive pattern <s>
+  --search-names <s>        Displays only names that match the case-insensitive pattern <s>
+  --shuffle-names           Displays the names in random order
 
 Examples
   $ pkgname
-  $ pkgname --npm-check --max-length 7
-  $ pkgname --npm-check --npm-latest --max-length 7
-  $ pkgname --npm-check --max-length 7 --search-pattern "the [a-z]+ star"
+  $ pkgname --npm-check --npm-latest
+  $ pkgname --max-length 7 --npm-check --search-definitions "the [a-z]+ star" --shuffle-names
+  $ pkgname --max-length 7 --npm-check --remove-hyphens --search-names "^.[aeiou][a-z]+a$"
 ```
 
 ## Development
@@ -86,7 +89,7 @@ npm publish
 ### Starting in debug mode
 
 ```sh
-DEBUG=cache,main node ./lib/index.js
+DEBUG=* node ./lib/index.js
 ```
 
 ---

@@ -7,7 +7,11 @@ export interface LexicalDatabase {
   readonly [filename: string]: string;
 }
 
-export function createNounDictionary(lexicalDatabase: LexicalDatabase): Map<string, string> {
+function normalize(noun: string, removeHyphens?: boolean): string {
+  return noun.replace(/[^A-Za-z0-9]/g, ' ').trim().replace(/\s+/g, removeHyphens ? '' : '-').toLowerCase();
+}
+
+export function createNounDictionary(lexicalDatabase: LexicalDatabase, removeHyphens?: boolean): Map<string, string> {
   const nounDictionary = new Map<string, string>();
   const nounData = lexicalDatabase['dict/data.noun'];
 
@@ -21,7 +25,7 @@ export function createNounDictionary(lexicalDatabase: LexicalDatabase): Map<stri
     const result = /^[0-9]{8}\s[0-9]{2}\s[a-z]\s[0-9]{2}\s(\S+)/.exec(line);
 
     if (result) {
-      const noun = result[1].replace(/[^A-Za-z0-9]/g, ' ').trim().replace(/\s+/g, '-').toLowerCase();
+      const noun = normalize(result[1], removeHyphens);
       const definition = line.split('|')[1].trim();
 
       nounDictionary.set(noun, definition);

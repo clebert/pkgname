@@ -18,7 +18,10 @@ export interface Options {
   readonly maxLength?: number;
   readonly npmCheck?: boolean;
   readonly npmLatest?: boolean;
-  readonly searchPattern?: string;
+  readonly removeHyphens?: boolean;
+  readonly searchDefinitions?: string;
+  readonly searchNames?: string;
+  readonly shuffleNames?: boolean;
 }
 
 function startWaitAnimation(prefix: string): () => void {
@@ -57,11 +60,11 @@ async function downloadPackageRegistry(): Promise<PackageRegistry> {
   return packageRegistry;
 }
 
-async function loadNounDictionary(): Promise<Map<string, string>> {
+async function loadNounDictionary(options: Options): Promise<Map<string, string>> {
   try {
-    return createNounDictionary(await readCache<LexicalDatabase>('lexicalDatabase'));
+    return createNounDictionary(await readCache<LexicalDatabase>('lexicalDatabase'), options.removeHyphens);
   } catch (error) {
-    return createNounDictionary(await downloadLexicalDatabase());
+    return createNounDictionary(await downloadLexicalDatabase(), options.removeHyphens);
   }
 }
 
@@ -84,44 +87,46 @@ async function loadReservedNames(options: Options): Promise<Set<string> | undefi
 export async function main(options: Options): Promise<void> {
   debug('options: %o', options);
 
-  const nounDictionary = await loadNounDictionary();
+  const dictionary = await loadNounDictionary(options);
   const reservedNames = await loadReservedNames(options);
 
-  const { maxLength, searchPattern } = options;
+  const { maxLength, searchDefinitions, searchNames, shuffleNames } = options;
 
-  let nouns = [];
+  let names = [];
 
-  for (const noun of nounDictionary.keys()) {
-    if ((!maxLength || noun.length <= maxLength) && (!reservedNames || !reservedNames.has(noun))) {
-      nouns.push(noun);
+  for (const name of dictionary.keys()) {
+    if ((!maxLength || name.length <= maxLength) && (!reservedNames || !reservedNames.has(name))) {
+      names.push(name);
     }
   }
 
-  if (searchPattern) {
-    const regex = new RegExp(searchPattern, 'i');
+  if (searchDefinitions) {
+    const regex = new RegExp(searchDefinitions, 'i');
 
-    nouns = nouns.filter(noun => {
-      if (regex.test(noun)) {
-        return true;
-      }
-
-      const definition = nounDictionary.get(noun);
+    names = names.filter(name => {
+      const definition = dictionary.get(name);
 
       return definition && regex.test(definition);
     });
   }
 
-  nouns = shuffle(nouns);
+  if (searchNames) {
+    const regex = new RegExp(searchNames, 'i');
 
-  console.log(green(`\n${nouns.length} names are available`));
+    names = names.filter(name => regex.test(name));
+  }
+
+  names = shuffleNames ? shuffle(names) : names.sort();
+
+  console.log(green(`\n${names.length} names are available`));
   console.log(yellow('\nPress \u23ce to display next name\nPress q+\u23ce to quit'));
 
-  for (const noun of nouns) {
-    const definition = nounDictionary.get(noun);
+  for (const name of names) {
+    const definition = dictionary.get(name);
 
     if (definition) {
       const response = await new Promise<string>(resolve => {
-        rl.question(`\n${blue(noun)}: ${gray(definition)}`, resolve);
+        rl.question(`\n${blue(name)}: ${gray(definition)}`, resolve);
       });
 
       if (response === 'q') {
