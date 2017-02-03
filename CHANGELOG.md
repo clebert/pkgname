@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.0.0"></a>
+# [3.0.0](https://github.com/clebert/pkgname/compare/v2.0.0...v3.0.0) (2017-02-03)
+
+
+### Features
+
+* add new cli options ([5a5c1a6](https://github.com/clebert/pkgname/commit/5a5c1a6))
+
+
+### BREAKING CHANGES
+
+* removed option --search-pattern
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/clebert/pkgname/compare/v1.5.1...v2.0.0) (2017-02-02)
 
